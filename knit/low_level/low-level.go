@@ -1,6 +1,9 @@
-package knit
+package low_level
 
-import "math"
+import (
+	"knit/knit/utils"
+	"math"
+)
 
 const (
 	Half    float64 = 0.5
@@ -15,10 +18,6 @@ func abs(number int) int {
 		return -number
 	}
 	return number
-}
-
-func floatEquals(first, second float64) bool {
-	return math.Abs(first-second) < 1e-7
 }
 
 func GeneratePinList(length, w, h int) []int16 {
@@ -46,8 +45,8 @@ func GeneratePinList(length, w, h int) []int16 {
 }
 
 func IsDotOnTheLine(dotX, dotY, startX, startY, endX, endY float64) bool {
-	if floatEquals(endX, startX) {
-		return floatEquals(dotX, endX)
+	if utils.FloatEquals(endX, startX) {
+		return utils.FloatEquals(dotX, endX)
 	}
 	slope := (endY - startY) / (endX - startX)
 	intercept := startY - slope*startX
@@ -66,7 +65,7 @@ func IsDotOnTheLine(dotX, dotY, startX, startY, endX, endY float64) bool {
 }
 
 func GetPointListOnLine(startX, startY, endX, endY int16) []int16 {
-	pointList := make([]int16, 0, 843)
+	pointList := make([]int16, 0, 600)
 	var movementX, movementY float64
 	if endX > startX {
 		movementX = 1
@@ -78,7 +77,12 @@ func GetPointListOnLine(startX, startY, endX, endY int16) []int16 {
 	} else {
 		movementY = -1
 	}
-	var currentX, currentY, startXf, startYf, endXf, endYf = float64(startX), float64(startY), float64(startX), float64(startY), float64(endX), float64(endY)
+	currentX := float64(startX)
+	currentY := float64(startY)
+	startXf := float64(startX)
+	startYf := float64(startY)
+	endXf := float64(endX)
+	endYf := float64(endY)
 	for i := int16(0); (currentX != endXf || currentY != endYf) && i < 1000; i++ {
 		pointList = append(pointList, int16(currentX))
 		pointList = append(pointList, int16(currentY))
@@ -88,7 +92,7 @@ func GetPointListOnLine(startX, startY, endX, endY int16) []int16 {
 			currentY += movementY
 		}
 	}
-	pointList = append(pointList, int16(endX))
-	pointList = append(pointList, int16(endY))
+	pointList = append(pointList, endX)
+	pointList = append(pointList, endY)
 	return pointList
 }
