@@ -72,6 +72,7 @@ func GetPointListOnTheLine(start, end *model.Vector) []*model.Vector {
 	currentY := start.Y
 	for i := int16(0); (currentX != end.X || currentY != end.Y) && i < 1000; i++ {
 		pointList = append(pointList, model.CreateVector(currentX, currentY))
+
 		if IsDotOnTheLine(model.CreateVector(currentX+movementX, currentY), start, end) {
 			currentX += movementX
 		} else {
@@ -80,4 +81,24 @@ func GetPointListOnTheLine(start, end *model.Vector) []*model.Vector {
 	}
 	pointList = append(pointList, end)
 	return pointList
+}
+
+func ReduceImageData(image *model.Image, start, end *model.Vector) {
+	dotList := GetPointListOnTheLine(start, end)
+	for _, dot := range dotList {
+		image.Inc(dot.X, dot.Y, 50)
+	}
+}
+
+func GetLineScore(image *model.Image, start, end *model.Vector) float64 {
+	dotList := GetPointListOnTheLine(start, end)
+	sum := 0
+	for _, dot := range dotList {
+		sum += int(255 - image.At(dot.X, dot.Y))
+	}
+	return float64(sum) / float64(len(dotList)*255)
+}
+
+func IsLineDrawn() {
+
 }
