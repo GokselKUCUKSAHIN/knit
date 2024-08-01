@@ -1,2 +1,0 @@
-# knit
-Kniting with Go
