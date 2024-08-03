@@ -5,7 +5,6 @@ import (
 	"knit2024/application/model_domain"
 	"knit2024/application/model_response"
 	"math"
-	"sync"
 )
 
 func Create(image [][]uint8, pinCount, lineLimit int, width, height int16) *model_response.KnitResponse {
@@ -126,23 +125,9 @@ func getPointsOnTheLine(lineStart, lineEnd *model_domain.Vector2[int16], limit i
 
 func reduceImage(image [][]uint8, lineStart, lineEnd *model_domain.Vector2[int16]) {
 	points := getPointsOnTheLine(lineStart, lineEnd, int16(len(image)))
-	// TODO: test here please :pray:
-	var wg sync.WaitGroup
-	for i := 0; i < 4; i++ {
-		wg.Add(1)
-		go func(part int) {
-			defer wg.Done()
-			quid := len(points) / 4
-			for j := i * quid; j < (i+1)*quid; j++ {
-				index := j
-				if j >= len(points) {
-					index = len(points) - 1
-				}
-				reducePoint(image, points[index])
-			}
-		}(i)
+	for i := 0; i < len(points); i++ {
+		reducePoint(image, points[i])
 	}
-	wg.Wait()
 }
 
 func reducePoint(image [][]uint8, dot *model_domain.Vector2[int16]) {
