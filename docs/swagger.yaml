@@ -1,0 +1,88 @@
+definitions:
+  custom_error.CustomError:
+    properties:
+      detail:
+        type: string
+      instant:
+        type: string
+      requestMethod:
+        type: string
+      requestUri:
+        type: string
+      status:
+        type: integer
+      title:
+        type: string
+    type: object
+  model.KnitRequest:
+    properties:
+      image:
+        items:
+          items:
+            type: integer
+          type: array
+        type: array
+      lineLimit:
+        type: integer
+      pinCount:
+        type: integer
+    type: object
+  model.KnitResponse:
+    properties:
+      height:
+        type: integer
+      lines:
+        items:
+          properties:
+            end:
+              type: integer
+            start:
+              type: integer
+          type: object
+        type: array
+      pins:
+        items:
+          properties:
+            x:
+              type: integer
+            "y":
+              type: integer
+          type: object
+        type: array
+      width:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /knit-image:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: KnitRequest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.KnitRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.KnitResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/custom_error.CustomError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/custom_error.CustomError'
+      tags:
+      - knit
+swagger: "2.0"
