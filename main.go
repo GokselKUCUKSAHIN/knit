@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
 	_ "knit2024/docs"
 	"knit2024/infrastructure/controller"
@@ -20,6 +21,9 @@ func main() {
 	logger := log.NewLogger("INFO")
 
 	e.Logger = logger
+
+	// Middlewares
+	registerMiddlewares(e)
 
 	// Controller
 	controller.NewKnitController(e)
@@ -66,4 +70,12 @@ func registerHealthCheck(e *echo.Echo) {
 	e.GET("/healthcheck", func(c echo.Context) error {
 		return c.NoContent(http.StatusOK)
 	})
+}
+
+func registerMiddlewares(e *echo.Echo) {
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:*"},
+		AllowMethods: []string{echo.POST},
+		AllowHeaders: []string{"Content-Type", "Authorization"},
+	}))
 }
