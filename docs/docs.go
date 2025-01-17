@@ -34,7 +34,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.KnitRequest"
+                            "$ref": "#/definitions/model_request.KnitRequest"
                         }
                     }
                 ],
@@ -44,7 +44,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/model.KnitResponse"
+                                "$ref": "#/definitions/model_response.KnitResponse"
                             }
                         }
                     },
@@ -88,7 +88,7 @@ const docTemplate = `{
                 }
             }
         },
-        "model.KnitRequest": {
+        "model_request.KnitRequest": {
             "type": "object",
             "properties": {
                 "image": {
@@ -108,7 +108,7 @@ const docTemplate = `{
                 }
             }
         },
-        "model.KnitResponse": {
+        "model_response.KnitResponse": {
             "type": "object",
             "properties": {
                 "height": {

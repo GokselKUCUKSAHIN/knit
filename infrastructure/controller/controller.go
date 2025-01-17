@@ -26,7 +26,7 @@ func (controller *knitController) register(e *echo.Echo) {
 // @Accept json
 // @Produce json
 // @Param request body model_request.KnitRequest true "KnitRequest"
-// @Success 200 {array} model_request.KnitResponse
+// @Success 200 {array} model_response.KnitResponse
 // @Failure 400 {object} custom_error.CustomError
 // @Failure 404 {object} custom_error.CustomError
 // @Router /knit-image [post]

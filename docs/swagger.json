@@ -22,7 +22,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.KnitRequest"
+                            "$ref": "#/definitions/model_request.KnitRequest"
                         }
                     }
                 ],
@@ -32,7 +32,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/model.KnitResponse"
+                                "$ref": "#/definitions/model_response.KnitResponse"
                             }
                         }
                     },
@@ -76,7 +76,7 @@
                 }
             }
         },
-        "model.KnitRequest": {
+        "model_request.KnitRequest": {
             "type": "object",
             "properties": {
                 "image": {
@@ -96,7 +96,7 @@
                 }
             }
         },
-        "model.KnitResponse": {
+        "model_response.KnitResponse": {
             "type": "object",
             "properties": {
                 "height": {

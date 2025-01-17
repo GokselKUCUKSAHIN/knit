@@ -14,7 +14,7 @@ definitions:
       title:
         type: string
     type: object
-  model.KnitRequest:
+  model_request.KnitRequest:
     properties:
       image:
         items:
@@ -27,7 +27,7 @@ definitions:
       pinCount:
         type: integer
     type: object
-  model.KnitResponse:
+  model_response.KnitResponse:
     properties:
       height:
         type: integer
@@ -65,7 +65,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/model.KnitRequest'
+          $ref: '#/definitions/model_request.KnitRequest'
       produces:
       - application/json
       responses:
@@ -73,7 +73,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/model.KnitResponse'
+              $ref: '#/definitions/model_response.KnitResponse'
             type: array
         "400":
           description: Bad Request
